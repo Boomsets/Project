@@ -1,16 +1,87 @@
+.Main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: 'inter';
+}
+
+.toDoList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-height: 200px;
+  width: 100%;
+  padding: 12px 0;
+  background-color: #fff;
+  border-radius: 12px;
+}
+.listTitle {
+
+}
+
 .task {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
-  background-color: white;
-  height: 34px;
-  border-radius: 17px;
+  width: 80%;
+  height: 26px;
+  padding: 4px 5%;
+  border-bottom: #e6e6e6 2px solid;
 }
+
+.listTitle{
+}
+
 .taskStatusButton {
-  border-radius: 50%;
   height: 26px;
   width: 26px;
   text-align: center;
+  border-radius: 50%;
+  border: none;
+  color: #2d9bf0;
+  font-weight: 700;
+}
+
+.addNewTask {
+  height: 26px;
+  background-color: #fff;
+  padding: 4px 5%;
+  border-radius: 12px;
+  display: flex;
+  gap: 24px;
+}
+
+.addNewTaskInput {
+  border: #e6e6e6 solid 1px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.addNewTaskButton {
+  border-radius: 8px;
+  font-family: 'inter';
+  border: none;
+  background-color: #2d9bf0;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #e6e6e6;
+}
+
+.filterButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.filterButton {
+  font-family: 'inter';
+  border-radius: 6px;
+  border: 0px;
+  font-size: 14px;
+  padding: 4px 12px;
 }
