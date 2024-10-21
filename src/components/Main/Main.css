@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 24px;
   font-family: 'inter';
+  
 }
 
 .toDoList {
@@ -29,7 +30,7 @@
   width: 80%;
   height: 26px;
   padding: 4px 5%;
-  border-bottom: #e6e6e6 2px solid;
+  border-bottom: #f0f4f9 2px solid;
 }
 
 .listTitle{
@@ -55,7 +56,7 @@
 }
 
 .addNewTaskInput {
-  border: #e6e6e6 solid 1px;
+  border: #f0f4f9 solid 1px;
   border-radius: 6px;
   width: 100%;
 }
@@ -69,7 +70,7 @@
 
 .completed {
   text-decoration: line-through;
-  color: #e6e6e6;
+  color: #f0f4f9;
 }
 
 .filterButtons {
@@ -84,4 +85,5 @@
   border: 0px;
   font-size: 14px;
   padding: 4px 12px;
+  background-color: #f0f4f9;
 }

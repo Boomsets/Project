@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Main.css';
+import Popup from '../Popup/Popup.jsx';
 
 function Main() {
   const [task, setTask] = useState({ title: '' });
@@ -7,8 +8,9 @@ function Main() {
     const savedTasks = JSON.parse(localStorage.getItem('localStorageTasks'));
     return savedTasks ? savedTasks : [];
   });
-  
-  const [filter, setFilter] = useState('all'); // Фильтр задач
+  const [filter, setFilter] = useState('all');
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
 
   const handleInputChange = (evt) => {
     setTask({ title: evt.target.value });
@@ -17,13 +19,14 @@ function Main() {
   const handleAddTask = (evt) => {
     evt.preventDefault();
     if (task.title) {
-      const newTask = { title: task.title, id: Date.now(), completed: false };
+      const newTask = { title: task.title, id: Date.now(), completed: false, description: '', date: '', time: '' };
       setTasks([...tasks, newTask]);
       setTask({ title: '' });
     }
   };
 
-  const toggleTaskCompletion = (id) => {
+  const toggleTaskCompletion = (id, evt) => {
+    evt.stopPropagation(); // Останавливаем всплытие события
     setTasks(tasks.map(task => 
       task.id === id ? { ...task, completed: !task.completed } : task
     ));
@@ -39,6 +42,19 @@ function Main() {
     return true;
   });
 
+  const handleOpenPopup = (task) => {
+    setSelectedTask(task);
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  const handleSaveTask = (updatedTask) => {
+    setTasks(tasks.map(task => (task.id === updatedTask.id ? updatedTask : task)));
+  };
+
   useEffect(() => {
     localStorage.setItem('localStorageTasks', JSON.stringify(tasks));
   }, [tasks]);
@@ -53,9 +69,13 @@ function Main() {
           <button className='filterButton' onClick={() => handleFilterTasksChange('incomplete')}>Невыполненные</button>
         </div>
         {filteredTasks.map((item) => (
-          <div className="task" key={item.id}>
+          <div className="task" key={item.id} onClick={() => handleOpenPopup(item)}>
             <p className={`taskText ${item.completed ? 'completed' : ''}`}>{item.title}</p>
-            <button className="taskStatusButton" onClick={() => toggleTaskCompletion(item.id)}>
+            <p>{item.date ? `Дата: ${item.date}` : ''} {item.time ? `Время: ${item.time}` : ''}</p>
+            <button
+              className="taskStatusButton"
+              onClick={(evt) => toggleTaskCompletion(item.id, evt)} // Передаем событие для остановки всплытия
+            >
               {item.completed ? '✓' : '✗'}
             </button>
           </div>
@@ -71,6 +91,14 @@ function Main() {
         />
         <button type="submit" className="addNewTaskButton">Добавить</button>
       </form>
+
+      {isPopupOpen && (
+        <Popup
+          task={selectedTask}
+          onClose={handleClosePopup}
+          onSave={handleSaveTask}
+        />
+      )}
     </div>
   );
 }
